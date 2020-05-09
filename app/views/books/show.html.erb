@@ -14,17 +14,10 @@
 		<td><%= link_to @booked.title, book_path(@booked.id) %></td>
 		<td><%= @booked.body %></td>
 		<td>
-			<% if @booked.favorited_by?(current_user) %>
-			  <%= link_to book_favorites_path(@booked),method: :delete do %>
-			    <%= fa_icon "fa fa-heart" %>
-			    <%= @booked.favorites.count %>
-			  <% end %>
-			<% else %>
-			  <%= link_to book_favorites_path(@booked), method: :post do %>
-			    <%= fa_icon "fa fa-heart" %>
-			    <%= @booked.favorites.count %>
-			  <% end %>
-			<% end %>
+		  <div id="favorites_buttons_<%= @booked.id %>">
+            <!-- localsオプションを使えばpartialオプション（部分テンプレートと強調する物）を必ず使用する -->
+            <%= render partial: 'favorites/favorite', locals: {book: @booked} %>
+          </div>
 		</td>
 		<td>コメント数:<%= @booked.book_comments.count %></td>
 		<% if @user == current_user %>
@@ -45,13 +38,32 @@
     <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
 <% end %>
 <div class="col-sm-12">
-<% @book_comments.each do |book_comment| %>
-  <%= book_comment.user.name %>
-  <%= book_comment.created_at.strftime('%Y/%m/%d') %>
-  <%= book_comment.comment %>
-<% if book_comment.user_id == current_user.id %>
-<%= link_to "削除", book_book_comments_path(book_comment), method: :delete, data: {confirm:'削除してもよろしいですか？'} %>
-<% end %>
-<% end %>
+	<table class="table">
+		<tbody>
+			<tr>
+			  <% @book_comments.each do |book_comment| %>
+			  <td>
+                 <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback:"no_image2.jpg" %>
+             </td>
+             <td>
+             	<%= book_comment.user.name %>
+             </td>
+             <td>
+                <%= book_comment.created_at.strftime('%Y/%m/%d') %>
+            </td>
+            <td>
+                <%= book_comment.comment %>
+            </td>
+            <td>
+                <% if book_comment.user_id == current_user.id %>
+            </td>
+            <td>
+                <%= link_to "削除", book_book_comments_path(book_comment), method: :delete, data: {confirm:'削除してもよろしいですか？'} %>
+            </td>
+            </tr>
+                <% end %>
+               <% end %>
+       </tbody>
+   </table>
 </div>
 </div>

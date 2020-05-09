@@ -24,17 +24,10 @@
        <td><%= link_to book.title,book_path(book.id) %></td>
        <td><%= book.body %></td>
        <td>
-         <% if book.favorited_by?(current_user) %>
-           <%= link_to book_favorites_path(book), method: :delete do %>
-             <%= fa_icon "fa fa-heart" %>
-             <%= book.favorites.count %>
-           <% end %>
-         <% else %>
-           <%= link_to book_favorites_path(book), method: :post do %>
-             <%= fa_icon "fa fa-heart" %>
-             <%= book.favorites.count %>
-           <% end %>
-         <% end %>
+        <div id="favorites_buttons_<%= book.id %>">
+          <!-- localsオプションを使えばpartialオプション（部分テンプレートと強調する物）を必ず使用する -->
+          <%= render partial: 'favorites/favorite', locals: {book: book} %>
+        </div>
        </td>
        <td><%= link_to "コメント数:#{book.book_comments.count}", book_path(book.id) %></td>
      </tr>
