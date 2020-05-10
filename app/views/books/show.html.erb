@@ -28,18 +28,18 @@
 </tbody>
 </table>
 
-<%= form_with model: [@booked, @book_comment] do |f| %>
-    <div class="row">
-        <div class="col-sm-12">
-            <%= f.text_area :comment, rows:'5', class: "form-control" %>
-        </div>
-    </div>
-    <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
-<% end %>
+	<%= form_with model: [@booked, @book_comment] do |f| %>
+	    <div class="row">
+	        <div class="col-sm-12">
+	            <%= f.text_area :comment, rows:'5', class: "form-control" %>
+	        </div>
+	    </div>
+	    <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+	<% end %>
 
-<div class="col-sm-12">
-	<table class="table book_comments_table">
-			 <%= render 'book_comments/book_comment', book_comments: @booked.book_comments %>
-   </table>
-</div>
+	<div class="col-sm-12">
+		<table class="table book_comments_table">
+				 <%= render 'book_comments/book_comment', book_comments: @booked.book_comments %>
+	   </table>
+	</div>
 </div>

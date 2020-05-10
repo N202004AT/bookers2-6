@@ -9,9 +9,9 @@ class BookCommentsController < ApplicationController
 		#コメントをセーブするよ
 		@book_comment.save
 		   # redirect_to book_path(@book.id)
-		flash[:success] = "Comment was successfully created."
 		@book_comments = BookComment.where(book_id: @book.id)
 	end
+
 
 	def destroy
 		@book_comment = BookComment.find(params[:book_id])
