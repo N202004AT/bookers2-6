@@ -8,18 +8,23 @@ class BookCommentsController < ApplicationController
 		@book_comment.book_id = @book.id
 		#コメントをセーブするよ
 		@book_comment.save
-		redirect_to book_path(@book.id)
+		   # redirect_to book_path(@book.id)
+		flash[:success] = "Comment was successfully created."
+		@book_comments = BookComment.where(book_id: @book.id)
 	end
+
 	def destroy
 		@book_comment = BookComment.find(params[:book_id])
 		@book = @book_comment.book
-		if @book_comment.destroy
+		@book_comment.user == current_user
+		@book_comment.destroy
+		@book_comments = BookComment.where(book_id: @book.id)
 			#「.」リレーション、結びついた物を取り出す為に使う。
-		   redirect_to book_path(@book.id)
-		end
+		   # redirect_to request.referer
 	end
 
 	def book_comment_params
-    params.require(:book_comment).permit(:user_id,:book_id,:comment)
-end
+    	params.require(:book_comment).permit(:user_id,:book_id,:comment)
+	end
+
 end

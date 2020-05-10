@@ -1,8 +1,23 @@
-<%= form_with model: [@booked, @book_comment] do |f| %>
-    <div class="row">
-        <div class="col-sm-12">
-            <%= f.text_area :comment, rows:'5', class: "form-control" %>
-        </div>
-    </div>
-    <%= f.submit "送信", class: "btn btn-lg btn-base-1 mt-20 pull-right" %>
+<% book_comments.each do |book_comment| %>
+   <tr>
+     <td>
+        <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback:"no_image2.jpg" %>
+     </td>
+     <td>
+        <%= book_comment.user.name %>
+     </td>
+     <td>
+        <%= book_comment.created_at.strftime('%Y/%m/%d') %>
+     </td>
+     <td>
+        <%= book_comment.comment %>
+     </td>
+     <td>
+        <% if book_comment.user_id == current_user.id %>
+     </td>
+     <td>
+        <%= link_to "削除", book_book_comments_path(book_comment), method: :delete, data: {confirm:'削除してもよろしいですか？'} ,remote: true %>
+     </td>
+   </tr>
+        <% end %>
 <% end %>
